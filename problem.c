@@ -13,7 +13,7 @@ double sum(int i){
 	for( j = 0; j < N; j++){
 		if( i == 0)		//Íý²Ê
 			ans += sci[j];
-		else			//±Ñ¸ì
+		else			//±Ñ¸
 			ans += eng[j];
 	}
 	return ans;
@@ -29,13 +29,13 @@ double ave(int i){
 /*-----É¸½àÊÐº¹-----*/
 double dev(int i){
 	int j;
-	double ave = ave(i);
+	double ans = 0.0;
 
 	for(j = 0; j < N; j++){
 		if( i == 0)		//Íý²Ê
-			ans = ans + pow(sci[j] - ave, 2.0);
-		else			//±Ñ¸ì
-			ans = ans + pow(eng[j] - ave, 2.0);
+			ans = ans + pow(sci[j] - ave(i), 2.0);
+		else			//±Ñ¸
+			ans = ans + pow(eng[j] - ave(i), 2.0);
 	}
 	return sqrt(ans / (double)N);
 }
@@ -44,15 +44,15 @@ double dev(int i){
 double stasco(int i, int j){
 	if( i == 0)		//Íý²Ê
 		return 50 * (sci[j] / ave(i));
-	else			//±Ñ¸ì
+	else			//±Ñ¸
 		return 50 * (eng[j] / ave(i));
 }
 
 
 /*-----¥½¡¼¥È-----*/
 
-//¥Ð¥Ö¥ë¥½¡¼¥È
-double bubble_sort( int a[], int n){
+//¥Ð¥Ö¥E½¡¼¥È
+void bubble_sort( double* a, int n){
 	int i, j, t;
 	for( i = 0; i < n-1; i++){
 		for( j = n-1; j > i; j--){
@@ -63,37 +63,31 @@ double bubble_sort( int a[], int n){
 			}
 		}
 	}
-	return a;
+	for (j = 0; j < N; j++) {
+		fprintf(stdout, "%4.1lf ", a[j]);
+	}
+	fprintf(stdout, "\n");
 }
 
 int main(){
 	double a[N], b[N];
 	int i,j;
 
-	fprintf( stdout, "[Íý²Ê]Ê¿¶ÑÅÀ : %.2lf	É¸½àÊÐº¹ : %.2lf	¹ç·×ÅÀ : %.2lf\n, ave(0), dev(0), sum(0));
-	fprintf( stdout, "[±Ñ¸ì]Ê¿¶ÑÅÀ : %.2lf	É¸½àÊÐº¹ : %.2lf	¹ç·×ÅÀ : %.2lf\n, ave(1), dev(1), sum(1));
+	fprintf( stdout, "[—‰È]•½‹Ï“_ :	%.2lf	•W€•Î· : %.2lf	‡Œv : %.2lf\n", ave(0), dev(0), sum(0));
+	fprintf( stdout, "[‰pŒê]•½‹Ï“_ :	%.2lf	•W€•Î· : %.2lf	‡Œv : %.2lf\n", ave(1), dev(1), sum(1));
 
-	fprintf( stdout, "\nÊÐº¹ÃÍ	[Íý²Ê] | [±Ñ¸ì]\n");
+	fprintf( stdout, "\n•Î·’l		[—‰È] | [‰pŒê]\n");
 	for(j = 0; j < N; j++){
-		fprintf(stdout, "j¿ÍÌÜ	:	 %.1lf, %.1lf\n", stasco(0,j),stasco(1,j));
+		fprintf(stdout, "%dl–Ú	:	%4.1lf    %4.1lf\n", j+1, stasco(0,j),stasco(1,j));
 	}
 
+	fprintf(stdout, "•À‚Ñ‘Ö‚¦\n");
 
 	memcpy( a, sci, sizeof(double) * N);
-	memcpy( a, bubble_sort( a, N), sizeof(double) * N);
+	bubble_sort(a, N);
 
-	memcpy( b, sci, sizeof(double) * N);
-	memcpy( b, bubble_sort( b, N), sizeof(double) * N);
-
-	for(j = 0; j < N; j++){
-		fprintf(stdout, "%lf ", a[j]);
-	}
-	fprintf(stdout, "\n");
-
-	for(j = 0; j < N; j++){
-		fprintf(stdout, "%lf ", b[j]);
-	}
-	fprintf(stdout, "\n");
+	memcpy( b, eng, sizeof(double) * N);
+	bubble_sort(b, N);
 
 	return 0;
 }
