@@ -40,7 +40,6 @@ double dev(int i){
 	return sqrt(ans / (double)N);
 }
 
-
 /*-----偏差値-----*/
 double stasco(int i, int j){
 	if( i == 0)		//理科
@@ -49,9 +48,52 @@ double stasco(int i, int j){
 		return 50 * (eng[j] / ave(i));
 }
 
+
+/*-----ソート-----*/
+
+//バブルソート
+double bubble_sort( int a[], int n){
+	int i, j, t;
+	for( i = 0; i < n-1; i++){
+		for( j = n-1; j > i; j--){
+			if( a[j] < a[j-1]){
+				t = a[j];
+				a[j] = a[j-1];
+				a[j-1] = t;
+			}
+		}
+	}
+	return a;
+}
+
 int main(){
-	
+	double a[N], b[N];
+	int i,j;
+
 	fprintf( stdout, "[理科]平均点 : %.2lf	標準偏差 : %.2lf	合計点 : %.2lf\n, ave(0), dev(0), sum(0));
 	fprintf( stdout, "[英語]平均点 : %.2lf	標準偏差 : %.2lf	合計点 : %.2lf\n, ave(1), dev(1), sum(1));
+
+	fprintf( stdout, "\n偏差値	[理科] | [英語]\n");
+	for(j = 0; j < N; j++){
+		fprintf(stdout, "j人目	:	 %.1lf, %.1lf\n", stasco(0,j),stasco(1,j));
+	}
+
+
+	memcpy( a, sci, sizeof(double) * N);
+	memcpy( a, bubble_sort( a, N), sizeof(double) * N);
+
+	memcpy( b, sci, sizeof(double) * N);
+	memcpy( b, bubble_sort( b, N), sizeof(double) * N);
+
+	for(j = 0; j < N; j++){
+		fprintf(stdout, "%lf ", a[j]);
+	}
+	fprintf(stdout, "\n");
+
+	for(j = 0; j < N; j++){
+		fprintf(stdout, "%lf ", b[j]);
+	}
+	fprintf(stdout, "\n");
+
 	return 0;
 }
